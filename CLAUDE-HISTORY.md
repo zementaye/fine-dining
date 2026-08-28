@@ -5,6 +5,16 @@ for the naming convention and PowerShell workflow.
 
 ---
 
+### 2026-08-28 — `gursha-fix-render-build.zip`
+
+Render's build failed: `error: unknown option '--turbopack'` on `next build`.
+This project pins Next.js 15.1.0, and production-build Turbopack support
+wasn't added until a later 15.x release — only `next dev --turbopack` works
+at this version. Changed the `build` script to plain `next build` (left
+`dev` untouched, since dev-mode Turbopack has long been supported).
+
+---
+
 ### 2026-08-28 — `gursha-add-gitignore.zip`
 
 Root cause found for the repeated push failures: the project never had a
