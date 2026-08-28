@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-bone text-charcoal font-body;
+}
+
+.nav-link {
+  @apply text-sm tracking-widest2 uppercase text-charcoal/80 hover:text-charcoal transition-colors;
+}
+
+/* Small reusable brand utilities used across the marketing + reservation UI */
+.eyebrow {
+  @apply uppercase tracking-widest2 text-xs text-brass;
+}
+
+.divider-mark {
+  @apply flex items-center justify-center gap-3 text-brass;
+}
+.divider-mark::before,
+.divider-mark::after {
+  content: "";
+  @apply h-px w-10 bg-brass/40;
+}
+
+.field {
+  @apply w-full border border-charcoal/20 px-4 py-3 bg-transparent placeholder:text-charcoal/40 focus:outline-none focus:border-brass transition-colors;
+}
+
+.btn-primary {
+  @apply w-full bg-charcoal text-bone py-4 tracking-widest2 uppercase text-sm hover:bg-berbere transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-charcoal;
+}
+
+.btn-outline {
+  @apply border border-charcoal px-6 py-3 text-sm tracking-widest2 uppercase hover:bg-charcoal hover:text-bone transition-colors;
+}
+
+.card {
+  @apply border border-charcoal/15 bg-bone-100;
+}
