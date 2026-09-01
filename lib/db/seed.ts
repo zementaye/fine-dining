@@ -93,6 +93,7 @@ async function main() {
     .insert(menus)
     .values({ name: "A La Carte", type: "a_la_carte", isActive: true })
     .returning();
+  if (!alaCarte) throw new Error("Failed to insert A La Carte menu");
 
   await db.insert(menuItems).values([
     {
@@ -183,6 +184,7 @@ async function main() {
     .insert(menus)
     .values({ name: "The Gursha Menu", type: "tasting", isActive: true, priceCents: 14500 })
     .returning();
+  if (!tasting) throw new Error("Failed to insert The Gursha Menu");
 
   const courseDefs = [
     { number: 1, name: "Buna & Bread" },

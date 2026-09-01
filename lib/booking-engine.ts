@@ -253,6 +253,8 @@ export async function createReservation(
       })
       .returning();
 
+    if (!row) throw new Error("Failed to create reservation");
+
     return { ...toResult(row), wasIdempotentReplay: false };
   });
 

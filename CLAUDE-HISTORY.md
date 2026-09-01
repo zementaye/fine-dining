@@ -5,6 +5,37 @@ for the naming convention and PowerShell workflow.
 
 ---
 
+### 2026-09-01 — `gursha-fix-typescript-build-errors.zip`
+
+Render's build compiled successfully but failed type-checking — this appears
+to be the **first real production build** this codebase has ever gone
+through (local dev via `next dev` doesn't type-check this strictly). Found
+and fixed the same root cause in 6 places: `const [row] = await db.insert(...).returning()`
+typed `row` as possibly `undefined`, and several call sites accessed
+`row.property` or passed `row` into a strictly-typed function without a
+guard. Fixed:
+
+- `app/api/account/register/route.ts` — the one Render's error pointed at
+- `app/api/private-events/route.ts` — `row` was passed unguarded into
+  `sendPrivateEventAdminNotification()`
+- `lib/rate-limit.ts` — **used by every rate-limited route** (register,
+  waitlist, private-events); `row.count` accessed without a guard. Fails
+  open (allows the request) in the near-impossible case the insert-or-update
+  returns nothing, rather than crashing.
+- `lib/booking-engine.ts` — the core reservation-creation transaction;
+  `row` passed unguarded into `toResult()`. Now throws (aborting the
+  transaction) if the insert didn't return a row, rather than risk silently
+  corrupting a reservation.
+- `lib/db/seed.ts` — `alaCarte.id` / `tasting.id` used dozens of times after
+  an unguarded destructure. Not run by `next build`, but tsconfig's
+  `**/*.ts` include meant it was still type-checked as part of the same
+  build step and would have failed once the build got past `register/route.ts`.
+
+Swept every `.returning()` call site in the codebase (11 files) to confirm
+these were the only unguarded ones.
+
+---
+
 ### 2026-08-28 — `gursha-20-point-audit-fixes.zip`
 
 Full audit against a 20-point site-health checklist (mobile menu, SEO

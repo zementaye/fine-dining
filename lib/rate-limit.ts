@@ -30,6 +30,11 @@ export async function checkRateLimit(
     })
     .returning({ count: rateLimitBuckets.count });
 
+  // This insert-or-update always returns exactly one row in practice; if it
+  // somehow doesn't, fail open (allow the request) rather than take down
+  // every rate-limited route in the app over a rate-limiter bug.
+  if (!row) return { allowed: true, remaining: opts.max };
+
   const allowed = row.count <= opts.max;
   return { allowed, remaining: Math.max(0, opts.max - row.count) };
 }

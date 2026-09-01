@@ -20,6 +20,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
   const [row] = await db.insert(privateEventInquiries).values(parsed.data).returning();
+  if (!row) {
+    return NextResponse.json({ error: "Could not save inquiry." }, { status: 500 });
+  }
 
   await sendPrivateEventAdminNotification(row).catch((err) =>
     console.error("Failed to notify admin of private event inquiry", err)

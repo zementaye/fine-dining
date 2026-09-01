@@ -33,5 +33,9 @@ export async function POST(req: NextRequest) {
     .values({ name: parsed.data.name, email: parsed.data.email, passwordHash, role: "guest" })
     .returning({ id: users.id });
 
+  if (!row) {
+    return NextResponse.json({ error: "Could not create account." }, { status: 500 });
+  }
+
   return NextResponse.json({ id: row.id }, { status: 201 });
 }
