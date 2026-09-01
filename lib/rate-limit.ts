@@ -42,6 +42,6 @@ export async function checkRateLimit(
 /** Best-effort client identifier: real IP behind Vercel's proxy, falling back to a header-less default. */
 export function getClientIp(req: Request): string {
   const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
+  if (forwarded) return (forwarded.split(",")[0] ?? forwarded).trim();
   return req.headers.get("x-real-ip") ?? "unknown";
 }

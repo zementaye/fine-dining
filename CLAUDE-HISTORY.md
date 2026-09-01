@@ -5,6 +5,30 @@ for the naming convention and PowerShell workflow.
 
 ---
 
+### 2026-09-01 — `gursha-fix-array-index-types.zip`
+
+Next build failure, one file further again: `app/reservations/page.tsx`'s
+`formatTime` helper — `const [h, m] = t.split(":").map(Number)`. The project
+has `noUncheckedIndexedAccess: true` in `tsconfig.json`, which types any
+array index access (including destructuring) as possibly `undefined`, even
+when the array's length is logically guaranteed. Rather than fix this one
+file and wait for the next build to find the next one, searched the whole
+codebase for the same shape of risk and fixed all 7 found in one pass:
+
+- `app/reservations/page.tsx`, `components/reservations/TimeSlotGrid.tsx`,
+  `lib/booking-engine.ts` (×3) — the same `t.split(":").map(Number)` time-parsing
+  pattern, 5 occurrences total. Fixed with destructuring defaults
+  (`const [h = 0, m = 0] = ...`).
+- `lib/rate-limit.ts`'s `getClientIp` — `forwarded.split(",")[0].trim()`.
+- `components/reservations/AddToCalendarButton.tsx`'s ICS date formatter —
+  `.split(".")[0] + "Z"`.
+
+Both fixed with a `?? fallback` before use. Searched for every remaining
+array-destructure and indexed-access-then-property/method-call pattern in
+the codebase afterward — nothing else matched.
+
+---
+
 ### 2026-09-01 — `gursha-fix-reminders-type-error.zip`
 
 Next build failure, one file further than the last fix:

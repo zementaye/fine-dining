@@ -14,7 +14,7 @@ export function AddToCalendarButton({
   function download() {
     const start = new Date(`${reservation.reservationDate}T${reservation.reservationTime}`);
     const end = new Date(start.getTime() + reservation.durationMinutes * 60000);
-    const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+    const fmt = (d: Date) => (d.toISOString().replace(/[-:]/g, "").split(".")[0] ?? "") + "Z";
 
     const ics = [
       "BEGIN:VCALENDAR",

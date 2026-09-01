@@ -56,7 +56,7 @@ type TimeWindow = { start: string; durationMinutes: number };
 /** Inclusive-exclusive overlap of two [start, start+duration) windows expressed as "HH:MM:SS". */
 export function windowsOverlap(a: TimeWindow, b: TimeWindow): boolean {
   const toMin = (t: string) => {
-    const [h, m] = t.split(":").map(Number);
+    const [h = 0, m = 0] = t.split(":").map(Number);
     return h * 60 + m;
   };
   const aStart = toMin(a.start);
@@ -370,8 +370,8 @@ export async function getAvailableSlots(args: {
   const slots: { time: string; durationMinutes: number; servicePeriodName: string }[] = [];
 
   for (const period of periods) {
-    const [startH, startM] = period.startTime.split(":").map(Number);
-    const [endH, endM] = period.endTime.split(":").map(Number);
+    const [startH = 0, startM = 0] = period.startTime.split(":").map(Number);
+    const [endH = 0, endM = 0] = period.endTime.split(":").map(Number);
     const startMin = startH * 60 + startM;
     const endMin = endH * 60 + endM;
 
