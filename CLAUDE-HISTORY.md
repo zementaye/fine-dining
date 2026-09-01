@@ -5,6 +5,18 @@ for the naming convention and PowerShell workflow.
 
 ---
 
+### 2026-09-01 — `gursha-fix-reminders-type-error.zip`
+
+Next build failure, one file further than the last fix:
+`app/api/cron/send-reminders/route.ts` — the loop's `label` value ("24h"/"2h")
+wasn't marked `as const` like its sibling `field` property was, so TypeScript
+widened it to plain `string`, but `sendReminderEmail()` requires the literal
+union `"24h" | "2h"`. Fixed by adding `as const`. Searched the rest of the
+codebase for the same pattern (object-literal arrays iterated in a `for...of`
+or `.map()`) — this was the only occurrence.
+
+---
+
 ### 2026-09-01 — `gursha-fix-typescript-build-errors.zip`
 
 Render's build compiled successfully but failed type-checking — this appears

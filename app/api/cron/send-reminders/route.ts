@@ -19,8 +19,8 @@ export async function GET(req: NextRequest) {
   let sent2h = 0;
 
   for (const { field, hoursOut, label } of [
-    { field: "reminded24h" as const, hoursOut: 24, label: "24h" },
-    { field: "reminded2h" as const, hoursOut: 2, label: "2h" },
+    { field: "reminded24h" as const, hoursOut: 24, label: "24h" as const },
+    { field: "reminded2h" as const, hoursOut: 2, label: "2h" as const },
   ]) {
     // Window: reservations landing within this cron's hourly tick, `hoursOut` from now.
     const windowStart = new Date(now.getTime() + (hoursOut - 0.5) * 60 * 60 * 1000);
