@@ -1,8 +1,14 @@
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { reservations } from "@/lib/db/schema";
+
+export const metadata: Metadata = {
+  title: "Your Account | Gursha",
+  robots: { index: false, follow: false },
+};
 
 // /account — guest's upcoming/past reservations and preferences.
 export default async function AccountPage() {
@@ -20,7 +26,7 @@ export default async function AccountPage() {
   const past = rows.filter((r) => r.reservationDate < today || r.status === "cancelled");
 
   return (
-    <div className="max-w-xl mx-auto px-8 py-20">
+    <div className="max-w-xl mx-auto px-5 sm:px-8 py-20">
       <h1 className="font-display text-3xl mb-10">My Reservations</h1>
 
       <h2 className="text-sm uppercase tracking-widest2 text-charcoal/50 mb-3">Upcoming</h2>

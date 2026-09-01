@@ -62,7 +62,7 @@ function ConfirmForm() {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-8 py-20">
+    <div className="max-w-xl mx-auto px-5 sm:px-8 py-20">
       <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
       <h1 className="font-display text-4xl text-center mb-2">Your Details</h1>
       <p className="text-center text-charcoal/60 mb-10">

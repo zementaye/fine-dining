@@ -50,7 +50,7 @@ export default function ReservationsPage() {
     : null;
 
   return (
-    <div className="max-w-4xl mx-auto px-8 py-20 grid md:grid-cols-[1fr_280px] gap-16">
+    <div className="max-w-4xl mx-auto px-5 sm:px-8 py-20 grid md:grid-cols-[1fr_280px] gap-16">
       <div>
         <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
         <h1 className="font-display text-4xl mb-2">Reserve a Table</h1>

@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "The Chef | Gursha",
+  description:
+    "Chef Selam Tesfaye brings Addis Ababa's family-table tradition to Shaw, D.C. — house-milled berbere, three-day fermented injera, and a nightly coffee ceremony.",
+};
+
 export default async function AboutPage() {
   return (
     <div>
-      <section className="max-w-3xl mx-auto px-8 py-20">
+      <section className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
         <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
         <h1 className="font-display text-4xl text-center mb-10">The Chef</h1>
 
@@ -30,7 +38,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-charcoal text-bone px-8 py-20">
+      <section className="bg-charcoal text-bone px-5 sm:px-8 py-20">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-display text-3xl mb-6">Sourcing &amp; Craft</h2>
           <div className="grid sm:grid-cols-3 gap-10 text-sm text-bone/70 leading-relaxed mt-10">

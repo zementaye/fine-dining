@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
+
+export const metadata: Metadata = {
+  title: "Menu | Gursha",
+  description:
+    "The Gursha tasting menu and à la carte — doro wat, kitfo, awaze tibs, and a vegetarian beyaynetu sampler, served family-style on fresh-baked injera.",
+};
 
 // Menu page: active a la carte + tasting menu. Prices are de-emphasized (discreet
 // luxury) — shown small, not the visual focus. Allergen info sits behind a details
@@ -14,7 +21,7 @@ export default async function MenuPage() {
   const tasting = activeMenus.find((m) => m.type === "tasting");
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-20">
+    <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
       <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
       <h1 className="font-display text-4xl text-center mb-4">Menu</h1>
       <p className="text-center text-charcoal/50 text-sm mb-16 max-w-md mx-auto">

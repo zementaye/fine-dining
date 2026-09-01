@@ -83,6 +83,7 @@ export function WineItemEditor({ wines }: { wines: Wine[] }) {
 
   return (
     <div>
+      <div className="overflow-x-auto">
       <table className="w-full text-sm mb-10">
         <thead className="text-left text-charcoal/50 border-b border-charcoal/10">
           <tr>
@@ -112,6 +113,7 @@ export function WineItemEditor({ wines }: { wines: Wine[] }) {
           ))}
         </tbody>
       </table>
+      </div>
 
       <div className="border border-charcoal/20 p-6 max-w-lg">
         <p className="text-xs uppercase tracking-widest2 text-charcoal/50 mb-4">

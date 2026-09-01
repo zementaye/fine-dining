@@ -10,7 +10,7 @@ function DepositContent() {
   const code = params.get("code")!;
 
   return (
-    <div className="max-w-xl mx-auto px-8 py-20">
+    <div className="max-w-xl mx-auto px-5 sm:px-8 py-20">
       <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
       <h1 className="font-display text-4xl text-center mb-10">Secure Your Table</h1>
       <DepositForm reservationId={reservationId} confirmationCode={code} />

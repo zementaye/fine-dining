@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 type Offer = {
   waitlistId: string;
@@ -11,6 +12,17 @@ type Offer = {
   offerExpiresAt: string | null;
   tableLabel: string | null;
 };
+
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 py-16 text-center">
+      <Link href="/" className="font-display text-2xl mb-10">
+        Gursha
+      </Link>
+      <div className="max-w-lg w-full">{children}</div>
+    </div>
+  );
+}
 
 // Landing page for the time-limited claim link sent from a waitlist offer
 // (see app/api/waitlist/[id]/offer/route.ts). Resolves the token to the
@@ -41,49 +53,54 @@ export default function ClaimPage({ params }: { params: Promise<{ token: string 
   async function claim() {
     if (!offer) return;
     setStatus("claiming");
-    const res = await fetch(`/api/waitlist/${offer.waitlistId}/claim`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, idempotencyKey: idempotencyKeyRef.current }),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      setStatus("done");
-      setMessage(`Booked! Confirmation code ${data.confirmationCode}.`);
-    } else {
+    try {
+      const res = await fetch(`/api/waitlist/${offer.waitlistId}/claim`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, idempotencyKey: idempotencyKeyRef.current }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStatus("done");
+        setMessage(`Booked! Confirmation code ${data.confirmationCode}.`);
+      } else {
+        setStatus("error");
+        setMessage(data.error ?? "Could not complete the booking.");
+      }
+    } catch {
       setStatus("error");
-      setMessage(data.error ?? "Could not complete the booking.");
+      setMessage("Could not reach the server — check your connection and try again.");
     }
   }
 
   if (loadError) {
     return (
-      <div className="max-w-lg mx-auto px-8 py-24 text-center">
+      <Shell>
         <h1 className="font-display text-3xl mb-4">This Offer Isn't Available</h1>
-        <p className="text-charcoal/60">{loadError}</p>
-      </div>
+        <p className="text-charcoal/60" role="alert">{loadError}</p>
+      </Shell>
     );
   }
 
   if (!offer) {
     return (
-      <div className="max-w-lg mx-auto px-8 py-24 text-center">
+      <Shell>
         <p className="text-charcoal/50 text-sm">Loading your offer…</p>
-      </div>
+      </Shell>
     );
   }
 
   if (status === "done") {
     return (
-      <div className="max-w-lg mx-auto px-8 py-24 text-center">
+      <Shell>
         <h1 className="font-display text-3xl mb-4">You're Booked</h1>
-        <p className="text-charcoal/70">{message}</p>
-      </div>
+        <p className="text-charcoal/70" role="status">{message}</p>
+      </Shell>
     );
   }
 
   return (
-    <div className="max-w-lg mx-auto px-8 py-24 text-center">
+    <Shell>
       <h1 className="font-display text-3xl mb-4">A Table Is Available</h1>
       <p className="text-charcoal/70 mb-2">
         {offer.requestedDate} · {offer.offeredTime?.slice(0, 5)} · Party of {offer.partySize}
@@ -95,15 +112,15 @@ export default function ClaimPage({ params }: { params: Promise<{ token: string 
         </p>
       )}
 
-      {status === "error" && <p className="text-sm text-red-700 mb-4">{message}</p>}
+      {status === "error" && <p className="text-sm text-red-700 mb-4" role="alert">{message}</p>}
 
       <button
         onClick={claim}
         disabled={status === "claiming"}
-        className="bg-charcoal text-bone px-8 py-3 tracking-widest2 uppercase text-sm disabled:opacity-40"
+        className="bg-charcoal text-bone px-8 py-3 tracking-widest2 uppercase text-sm disabled:opacity-40 hover:bg-berbere transition-colors"
       >
         {status === "claiming" ? "Booking…" : "Claim This Table"}
       </button>
-    </div>
+    </Shell>
   );
 }

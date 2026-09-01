@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import { reservations } from "@/lib/db/schema";
 import { notFound } from "next/navigation";
@@ -6,14 +7,22 @@ import { CancelButton } from "@/components/reservations/CancelButton";
 import { AddToCalendarButton } from "@/components/reservations/AddToCalendarButton";
 import { PaymentPendingBanner } from "@/components/reservations/PaymentPendingBanner";
 
+export const metadata: Metadata = {
+  title: "Your Reservation | Gursha",
+  robots: { index: false, follow: false },
+};
+
 // /reservations/[confirmationCode] — guest views and can cancel (subject to the
 // cancellation window, enforced server-side in DELETE /api/reservations/[id]).
 export default async function ManageReservationPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ confirmationCode: string }>;
+  searchParams: Promise<{ justBooked?: string }>;
 }) {
   const { confirmationCode } = await params;
+  const { justBooked } = await searchParams;
   const reservation = await db.query.reservations.findFirst({
     where: eq(reservations.confirmationCode, confirmationCode.toUpperCase()),
     with: { table: true },
@@ -24,10 +33,19 @@ export default async function ManageReservationPage({
   const isCancellable = !["cancelled", "completed", "no_show"].includes(reservation.status);
 
   return (
-    <div className="max-w-xl mx-auto px-8 py-20">
+    <div className="max-w-xl mx-auto px-5 sm:px-8 py-20">
       <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
       <h1 className="font-display text-4xl text-center mb-2">Your Reservation</h1>
-      <p className="text-center text-charcoal/50 mb-10">Confirmation {reservation.confirmationCode}</p>
+      <p className="text-center text-charcoal/50 mb-6">Confirmation {reservation.confirmationCode}</p>
+
+      {justBooked === "1" && (
+        <p
+          role="status"
+          className="text-center text-sm bg-brass/10 border border-brass/30 text-brass px-4 py-3 mb-6"
+        >
+          Reservation confirmed — a confirmation email is on its way.
+        </p>
+      )}
 
       <PaymentPendingBanner status={reservation.status} />
 

@@ -49,6 +49,7 @@ export function ReservationTable({ initialDate, initialRows }: { initialDate: st
         onChange={(e) => reload(e.target.value)}
         className="border border-charcoal/20 px-3 py-2 mb-6"
       />
+      <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead className="text-left text-charcoal/50 border-b border-charcoal/10">
           <tr>
@@ -87,6 +88,7 @@ export function ReservationTable({ initialDate, initialRows }: { initialDate: st
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

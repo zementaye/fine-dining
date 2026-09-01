@@ -35,6 +35,7 @@ export function WaitlistPanel({ entries, tables }: { entries: Entry[]; tables: T
   }
 
   return (
+    <div className="overflow-x-auto">
     <table className="w-full text-sm">
       <thead className="text-left text-charcoal/50 border-b border-charcoal/10">
         <tr><th className="py-2">Guest</th><th>Party</th><th>Requested</th><th>Offer</th></tr>
@@ -71,5 +72,6 @@ export function WaitlistPanel({ entries, tables }: { entries: Entry[]; tables: T
         ))}
       </tbody>
     </table>
+    </div>
   );
 }

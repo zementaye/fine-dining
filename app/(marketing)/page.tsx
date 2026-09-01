@@ -1,5 +1,12 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
+
+export const metadata: Metadata = {
+  title: "Gursha | Modern Ethiopian Fine Dining in Shaw, D.C.",
+  description:
+    "A modern Ethiopian dining room in Shaw, Washington D.C. — live-fire cooking, a house berbere spice program, and injera baked to order, served family-style. Reservations required.",
+};
 
 // Homepage: full-bleed hero, one-line philosophy, chef teaser, press strip.
 // Typography, a warm dark palette, and a woven-tray texture carry the design —
@@ -16,11 +23,11 @@ export default async function HomePage() {
       <section className="relative h-[92vh] flex items-end bg-charcoal text-bone overflow-hidden">
         <div className="absolute inset-0 bg-mesob text-brass/[0.07]" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/20" />
-        <div className="relative z-10 px-8 pb-20 max-w-3xl">
+        <div className="relative z-10 px-5 sm:px-8 pb-20 max-w-3xl">
           <p className="uppercase tracking-widest2 text-brass text-sm mb-4">
             Est. — Shaw, Washington D.C.
           </p>
-          <h1 className="font-display text-6xl md:text-7xl leading-tight mb-6">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl leading-tight mb-6">
             Cooking that gathers everyone around one plate.
           </h1>
           <p className="text-bone/70 max-w-xl mb-8 leading-relaxed">
@@ -45,7 +52,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="max-w-3xl mx-auto px-8 py-24 text-center">
+      <section className="max-w-3xl mx-auto px-5 sm:px-8 py-24 text-center">
         <p className="divider-mark mb-6 text-xs uppercase tracking-widest2">Gursha</p>
         <h2 className="font-display text-3xl mb-6">
           A gesture, not just a dish
@@ -63,7 +70,7 @@ export default async function HomePage() {
         </Link>
       </section>
 
-      <section className="bg-charcoal text-bone px-8 py-20">
+      <section className="bg-charcoal text-bone px-5 sm:px-8 py-20">
         <div className="max-w-5xl mx-auto grid sm:grid-cols-3 gap-10 text-center">
           <div>
             <p className="font-display text-2xl mb-3">Live-Fire Kitchen</p>
@@ -90,7 +97,7 @@ export default async function HomePage() {
       </section>
 
       {press.length > 0 && (
-        <section className="px-8 py-16 border-t border-charcoal/10">
+        <section className="px-5 sm:px-8 py-16 border-t border-charcoal/10">
           <p className="text-center uppercase tracking-widest2 text-sm text-charcoal/50 mb-8">
             As Featured In
           </p>

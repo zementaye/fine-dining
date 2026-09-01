@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
+
+export const metadata: Metadata = {
+  title: "Wine & Tej | Gursha",
+  description:
+    "House-brewed tej (Ethiopian honey wine) and a small, natural-leaning wine list chosen to stand up to berbere and smoke, at Gursha in Shaw, D.C.",
+};
 
 // Wine & Tej page: pulls from the same `wine_list` table the admin editor
 // writes to (see /admin/wine + WineItemEditor), grouped by category —
@@ -11,7 +18,7 @@ export default async function WinePage() {
   const categories = Array.from(new Set(wines.map((w) => w.category)));
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-20">
+    <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
       <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
       <h1 className="font-display text-4xl text-center mb-4">Wine &amp; Tej</h1>
       <p className="text-center text-charcoal/50 text-sm mb-16 max-w-md mx-auto">

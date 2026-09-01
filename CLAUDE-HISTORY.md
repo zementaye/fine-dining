@@ -5,6 +5,33 @@ for the naming convention and PowerShell workflow.
 
 ---
 
+### 2026-08-28 — `gursha-20-point-audit-fixes.zip`
+
+Full audit against a 20-point site-health checklist (mobile menu, SEO
+metadata, broken links, accessibility of contact info, etc.). 17 of 20 items
+required real fixes; 3 were already clean (no placeholder text, no dead nav
+items, error messaging was already solid). Notable finds beyond pure
+polish:
+
+- **Real bug**: guest registration → login always redirected to `/admin`,
+  which then bounced non-staff straight back to `/login` with no explanation.
+  Login now checks the session role and routes staff → `/admin`, guests →
+  `/account`.
+- **Missing entirely**: mobile hamburger menu (nav was `hidden` below `md`
+  with no alternative access on phones), favicon, custom 404 page, dynamic
+  copyright year, per-page `<title>`/meta description (every page shared the
+  root layout's title).
+- **Silent success paths fixed**: booking confirmation page, cancel-reservation
+  button, and account registration now all show explicit confirmation instead
+  of just redirecting with no feedback.
+- Gallery switched from raw `<img>` to `next/image`; 4 raw admin `<table>`s
+  wrapped in `overflow-x-auto` (would've forced page-wide horizontal scroll
+  on phones); phone/email made `tel:`/`mailto:` everywhere they appear;
+  responsive container padding (`px-5 sm:px-8`) applied consistently across
+  every page.
+
+---
+
 ### 2026-08-28 — `gursha-fix-render-build.zip`
 
 Render's build failed: `error: unknown option '--turbopack'` on `next build`.

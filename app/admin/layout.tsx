@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
+
+export const metadata: Metadata = {
+  title: "Floor Office | Gursha",
+  robots: { index: false, follow: false },
+};
 
 const NAV = [
   { href: "/admin", label: "Dashboard" },
@@ -24,7 +30,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen flex bg-bone-100">
       <aside className="w-60 bg-charcoal text-bone/80 p-6 flex flex-col">
-        <p className="font-display text-2xl text-bone mb-1">Gursha</p>
+        <Link href="/admin" className="font-display text-2xl text-bone mb-1 hover:text-brass transition-colors">
+          Gursha
+        </Link>
         <p className="text-xs uppercase tracking-widest2 text-bone/40 mb-8">Floor Office</p>
         <nav className="flex flex-col gap-1 text-sm">
           {NAV.map((item) => (

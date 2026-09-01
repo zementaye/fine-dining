@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
+
+export const metadata: Metadata = {
+  title: "Press | Gursha",
+  description: "News and reviews covering Gursha, a modern Ethiopian restaurant in Shaw, Washington D.C.",
+};
 
 export default async function PressPage() {
   const press = await db.query.pressMentions.findMany({
@@ -7,7 +13,7 @@ export default async function PressPage() {
   });
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-20">
+    <div className="max-w-3xl mx-auto px-5 sm:px-8 py-20">
       <p className="divider-mark mb-4 text-xs uppercase tracking-widest2">Gursha</p>
       <h1 className="font-display text-4xl text-center mb-16">Press</h1>
 
